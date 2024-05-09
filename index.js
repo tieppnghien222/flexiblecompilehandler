@@ -1,22 +1,14 @@
-function removeKdigits(num, k) {
-  const stack = [];
-  for (const digit of num) {
-    while (k > 0 && stack.length && stack[stack.length - 1] > digit) {
-      stack.pop();
-      k--;
+function wordBreak(s, wordDict) {
+  const set = new Set(wordDict);
+  const dp = new Array(s.length + 1).fill(false);
+  dp[0] = true;
+  for (let end = 1; end <= s.length; end++) {
+    for (let start = 0; start < end; start++) {
+      if (dp[start] && set.has(s.substring(start, end))) {
+        dp[end] = true;
+        break;
+      }
     }
-    stack.push(digit);
   }
-  while (k > 0) {
-    stack.pop();
-    k--;
-  }
-  let result = "";
-  let leadingZero = true;
-  for (const digit of stack) {
-    if (leadingZero && digit === "0") continue;
-    leadingZero = false;
-    result += digit;
-  }
-  return result || "0";
+  return dp[s.length];
 }

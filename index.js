@@ -1,14 +1,13 @@
-function wordBreak(s, wordDict) {
-  const set = new Set(wordDict);
-  const dp = new Array(s.length + 1).fill(false);
-  dp[0] = true;
-  for (let end = 1; end <= s.length; end++) {
-    for (let start = 0; start < end; start++) {
-      if (dp[start] && set.has(s.substring(start, end))) {
-        dp[end] = true;
-        break;
-      }
-    }
+const stoogeSort = (arr, i = 0, j = arr.length - 1) => {
+  if (arr[i] > arr[j]) {
+    [arr[i], arr[j]] = [arr[j], arr[i]];
   }
-  return dp[s.length];
-}
+  if (i + 1 >= j) {
+    return arr;
+  }
+  const t = Math.floor((j - i + 1) / 3);
+  stoogeSort(arr, i, j - t);
+  stoogeSort(arr, i + t, j);
+  stoogeSort(arr, i, j - t);
+  return arr;
+};
